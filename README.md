@@ -1,39 +1,22 @@
-# odev1-_sql.txt
-TurkStudentCo Data Science Bootcamp - 1. Hafta SQL Ödevi,   Serra Eryeşil,  seryesil02@gmail.com
-
-SELECT  FirstName, LastName, Salary FROM employees;
-(Bu sorguyu `employees` tablosundan sadece `FirstName`, `LastName` ve `Salary` sütunlarını getirmek için kullandık. )
-
-
-SELECT DISTINCT d.DepartmentName
-FROM employees e
-JOIN departments d ON e.DepartmentID = d.DepartmentID;
-- ` SELECT DISTINCT` kullanarak tekrar eden departman isimlerini filtreledim.
-- `JOIN` kullanarak `employees` ve `departments` tablolarını bağladım.
-- `employees.DepartmentID`, `departments.DepartmentID` ile eşleştirerek departman adlarını getirdim. Employees tablosuna ilaveten eklemiş olduk.
-- ON komutu çağrılan ve daha önce tabloda bulunmayan verileri çağırmak için kullanıldı. 
-
-
-SELECT * FROM employees e
-JOIN departments d ON e.DepartmentID = d.DepartmentID
-WHERE d.DepartmentName = 'IT';
-- `JOIN` ile `employees` ve `departments` tablolarını birleştirdik. 
-- `WHERE d.DepartmentName = 'IT'` filtresiyle sadece ‘IT’ departmanına ulaştık ve  çalışanları getirdik.
-
-
+SELECT FirstName, LastName, Salary FROM employees;
+SELECT DISTINCT departments.departmentname 
+FROM employees
+JOIN departments ON employees.departmentid = departments.departmentid;
 SELECT * FROM employees
-ORDER BY Salary DESC;
-- `ORDER BY Salary DESC` ifadesi ile maaşı en yüksek olandan en düşüğe sıraladım. Hangi sütuna işlem yapacağımıza ve sıralayacağımıza karar verdik.
-- `DESC` yerine `ASC` kullandığım için , maaşlar küçükten büyüğe doğru sıralanacak.
-
-SELECT
-    CONCAT(e.FirstName, ' ', e.LastName) AS FullName,
-    e.EmployeeID,
-    e.Age,
+JOIN departments ON employees.departmentid = departments.departmentid
+WHERE departments.departmentname = 'IT';
+SELECT * FROM employees 
+ORDER BY salary DESC;
+SELECT CONCAT(FirstName, ' ', LastName) AS FullName, EmployeeID, FirstName, LastName, Age, Salary, JoinDate 
+FROM employees;
+SELECT 
+    CONCAT(e.FirstName, ' ', e.LastName) AS FullName, 
+    e.EmployeeID, 
+    e.FirstName, 
+    e.LastName, 
+    e.Age, 
     d.DepartmentName,  
-    e.Salary,
-    e.JoinDate
+    e.Salary, 
+    e.JoinDate 
 FROM employees e
-JOIN departments d ON e.DepartmentID = d.DepartmentID;
-- `CONCAT(FirstName, ' ', LastName) AS FullName` ile ad ve soyadı birleştirerek "FullName" sütunu oluşturduk.
-- `JOIN` ile departman adlarını da ekleyerek veriyi daha anlamlı hale getirdik.
+JOIN departments d ON e.DepartmentID = d.DepartmentID; 
