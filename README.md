@@ -10,7 +10,7 @@ FROM employees e
 JOIN departments d ON e.DepartmentID = d.DepartmentID;
 - ` SELECT DISTINCT` kullanarak tekrar eden departman isimlerini filtreledim.
 - `JOIN` kullanarak `employees` ve `departments` tablolarını bağladım.
-- `employees.DepartmentID`, `departments.DepartmentID` ile eşleştirerek departman adlarını getirdim. Employees’e tablosuna ilaveten eklemiş olduk.
+- `employees.DepartmentID`, `departments.DepartmentID` ile eşleştirerek departman adlarını getirdim. Employees tablosuna ilaveten eklemiş olduk.
 - ON komutu çağrılan ve daha önce tabloda bulunmayan verileri çağırmak için kullanıldı. 
 
 
