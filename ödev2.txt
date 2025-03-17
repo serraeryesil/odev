@@ -1,0 +1,48 @@
+SELECT COUNT(*) 
+FROM Invoice
+WHERE invoice_id IS NULL 
+AND customer_id IS NULL 
+AND invoice_date IS NULL 
+AND billing_address IS NULL 
+AND billing_city IS NULL 
+AND billing_state IS NULL 
+AND billing_country IS NULL 
+AND billingpostal_code IS NULL 
+AND total IS NULL;     -- Row Sayısı: 0
+
+SELECT 
+    total AS eski_total,
+    total * 2 AS yeni_total
+FROM invoice
+ORDER BY yeni_total DESC;
+
+--Çıktı:
+-- eski_total | yeni_total
+-- -----------+-----------
+-- 25.86      | 51.72
+-- 23.86      | 47.72
+-- 21.86      | 47.72
+-- 18.86      | 37.72
+-- 17.91      |35.82
+
+SELECT 
+    LEFT(billing_address, 3) || '...' || RIGHT(billing_address, 4) AS "Açık_adres"
+FROM invoice
+WHERE 
+    EXTRACT(YEAR FROM invoice_date) = 2013 
+    AND EXTRACT(MONTH FROM invoice_date) = 8;
+
+-- Çıktı:
+-- Açık_adres
+-- ---------------
+--"3 C...reet"
+--"Lij...20bg"
+--"C/ ...o 85"
+--"110...n Pl"
+--"Av....2170"
+--"Rua... 155"
+--"162...reet"
+
+
+
+
