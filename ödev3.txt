@@ -1,0 +1,6 @@
+## SORGULARIN AÇIKLAMASI 'README.md3' dosyasında verilmiştir.
+
+SELECT SUM(total) AS total_sales
+FROM invoice
+WHERE billing_country = 'USA'
+AND EXTRACT(YEAR FROM invoice_date) = 2009;
