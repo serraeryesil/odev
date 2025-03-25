@@ -1,0 +1,65 @@
+#  SQL Bootcamp - 3. Hafta Ödev Soruları  
+
+Bu repo, SQL Bootcamp üçüncü hafta ödevini içermektedir. PostgreSQL kullanılarak Chinook veritabanı üzerinden yapılan sorgular ve açıklamaları aşağıda verilmiştir.  
+
+##  İçerik  
+- `ödev3.sql`: Ödevde istenen SQL sorgularını içermektedir.  
+- `README.md`: Sorguların açıklamalarını ve nasıl çalıştığını açıkladım.  
+
+##  Kullanılan Veritabanı ve Tablolar  
+Ödevde Chinook veritabanı kullanılmıştır. Sorgular aşağıdaki tablolar üzerinden gerçekleştirilmiştir:  
+- `invoice`  
+- `track`  
+- `playlisttrack`  
+- `playlist`  
+- `album`  
+- `artist`  
+
+---
+##  **Sorgular ve Açıklamaları**  
+
+###  **Soru 1: USA Ülkesine Ait 2009 Yılı Faturalarının Toplamı**  
+ 
+SELECT SUM(total) AS total_sales
+FROM invoice
+WHERE billing_country = 'USA'
+AND EXTRACT(YEAR FROM invoice_date) = 2009;
+
+## Açıklama:
+-SUM(total) AS total_sales: ABD'de kesilen 2009 yılına ait faturaların toplamını hesaplar.
+
+-WHERE billing_country = 'USA': Sadece ABD'deki faturaları filtreler.
+
+-EXTRACT(YEAR FROM invoice_date) = 2009: Fatura takvimi 2009 yılına göre sınırlandırılır.
+
+
+
+###  **Soru 2: Track, PlaylistTrack ve Playlist JOIN Sorgusu**
+
+SELECT t.track_id, t.name AS track_name, p.name AS playlist_name
+FROM track t
+JOIN playlisttrack pt ON t.track_id = pt.track_id
+JOIN playlist p ON pt.playlist_id = p.playlist_id;
+
+## Açıklama: 
+JOIN playlisttrack pt ON t.track_id = pt.track_id: track ve playlisttrack tablolarını ilişkilendirmek için kullandık.
+JOIN playlist p ON pt.playlist_id = p.playlist_id: playlisttrack ile playlist tablolarını birleştirerek her parçanın hangi çalma listesinde olduğunu gösterir.
+t.track_id, t.name AS track_name, p.name AS playlist_name: Parça kimliği, parça adı ve çalma listesi adını seçtik.
+
+###  **Soru 3: "Let There Be Rock" Albümüne Ait Parçalar ve Sanatçı Bilgisi**
+
+SELECT t.track_id, t.name AS track_name, ar.name AS artist_name, t.milliseconds
+FROM track t
+JOIN album al ON t.album_id = al.album_id
+JOIN artist ar ON al.artist_id = ar.artist_id
+WHERE al.title = 'Let There Be Rock'
+ORDER BY t.milliseconds DESC;
+
+## Açıklama: 
+JOIN album al ON t.album_id = al.album_id: track tablosu ile album tablosunu birleştirir.
+
+JOIN artist ar ON al.artist_id = ar.artist_id: Albümle ilişkili sanatçıyı getirir.
+
+WHERE al.title = 'Let There Be Rock': Sadece "Let There Be Rock" albümünü filtreler.
+
+ORDER BY t.milliseconds DESC: Parçaları süresine göre büyükten küçüğe sıralar.
