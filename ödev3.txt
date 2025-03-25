@@ -4,3 +4,15 @@ SELECT SUM(total) AS total_sales
 FROM invoice
 WHERE billing_country = 'USA'
 AND EXTRACT(YEAR FROM invoice_date) = 2009;
+
+SELECT t.track_id, t.name AS track_name, p.name AS playlist_name
+FROM track t
+JOIN playlisttrack pt ON t.track_id = pt.track_id
+JOIN playlist p ON pt.playlist_id = p.playlist_id;
+SELECT t.track_id, t.name AS track_name, ar.name AS artist_name, t.milliseconds
+FROM track t
+JOIN album al ON t.album_id = al.album_id
+JOIN artist ar ON al.artist_id = ar.artist_id
+WHERE al.title = 'Let There Be Rock'
+ORDER BY t.milliseconds DESC;
+
