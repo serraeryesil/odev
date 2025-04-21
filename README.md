@@ -77,5 +77,5 @@ All tables use **primary keys**, and appropriate **foreign key constraints** are
 
 ---
 
-Thank you for reviewing this project!  
-Feel free to explore the schema and extend it for advanced features such as quizzes, messaging, or admin dashboards.
+Thank you for reviewing this project.
+
