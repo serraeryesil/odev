@@ -1,97 +1,81 @@
-# TurkStudentCo Data Science Bootcamp - 2. Hafta SQL
+# Online Education Platform - PostgreSQL Database FINAL Project 
 
-# 1. Amaç
+This project was developed as part of the TurkStudentCo Data Science Bootcamp SQL Final Assignment. The goal of the project is to design and implement a relational database schema for an **Online Education Platform** using PostgreSQL. The database supports user registration, course participation, certification, and a blogging system for users.
 
-Bu ödevde, **Chinook** veritabanında yer alan `Invoice` tablosu üzerinde çeşitli SQL sorguları yazmamız istendi.
-Bu sayede SQL sorgulama becerilerimi geliştirmek ve farklı SQL işlemlerini uygulama amaçlanmıştır.
+## Project Scope
 
----
+The database design covers the following core functionalities:
 
-# 2. SQL Sorguları ve Açıklamaları
-
-## **Soru 1: Tüm değerleri NULL olan kayıtları bulma**
-
-Bu sorguda, `Invoice` tablosundaki tüm sütunları NULL olan kayıtların sayısını bulmamız istenmiştir.
-
-# **SQL Sorgusu:**
-```sql
-SELECT COUNT(*)
-FROM Invoice
-WHERE invoice_id IS NULL
-AND customer_id IS NULL
-AND invoice_date IS NULL
-AND billing_address IS NULL
-AND billing_city IS NULL
-AND billing_state IS NULL
-AND billing_country IS NULL
-AND billingpostal_code IS NULL
-AND total IS NULL;
-```
-
-# **Sonuç:**
-**Row Sayısı: 0**  
-Tabloda tüm sütunları NULL olan bir kayıt bulunmamaktadır.
+- **User Registration and Profile Management**
+- **Course Catalog with Category Classification**
+- **User Enrollments in Courses**
+- **Issuing and Assigning Certificates to Users**
+- **User-generated Blog Posts**
+- **Timestamped activity tracking (registration, enrollment, publication, etc.)**
 
 ---
 
-## **Soru 2: Total değerlerini iki katına çıkarma ve sıralama**
+## Tables Overview
 
-Bu sorguda, `total` sütunundaki değerleri iki katına çıkararak yeni bir sütun oluşturuyoruz ve bu sütuna göre azalan sıralama yapıyoruz.
+| Table Name             | Purpose |
+|------------------------|---------|
+| `Members`              | Stores user profile and login information |
+| `Categories`           | Stores course categories (e.g. AI, Cybersecurity) |
+| `Courses`              | Stores course metadata, linked to categories |
+| `Enrollments`          | Tracks which users are enrolled in which courses |
+| `Certificates`         | Stores issued certificates for completed courses |
+| `CertificateAssignments` | Links users to their earned certificates |
+| `BlogPosts`            | Stores user-generated blog content |
 
-# **SQL Sorgusu:**
-```sql
-SELECT
-    total AS eski_total,
-    total * 2 AS yeni_total
-FROM Invoice
-ORDER BY yeni_total DESC;
-```
-
-# **Çıktı:**
-| eski_total | yeni_total |
-|------------|------------|
-| 25.86      | 51.72      |
-| 23.86      | 47.72      |
-| 21.86      | 43.72      |
-| 18.86      | 37.72      |
-| 17.91      | 35.82      |
-
-Bu sorgu sayesinde, `total` değerlerini ikiyle çarparak yeni bir sütun oluşturur ve büyükten küçüğe sıralar. İlk birkaç çıktının değeri yazıldı.
+All tables use **primary keys**, and appropriate **foreign key constraints** are implemented to ensure referential integrity. Unique constraints are also applied where necessary (e.g., `username`, `email`, `certificate_code`).
 
 ---
 
-# **Soru 3: Adres verisini kısaltarak gösterme**
+## 🔧 Technologies Used
 
-Bu sorguda, `billing_address` sütunundaki verilerin **ilk 3** karakteri ve **son 4** karakteri alınarak `Açık_adres` adı altında yeni bir sütun oluşturulmuştur. Ayrıca, yalnızca **2013 yılının 8. ayına ait faturalar** filtrelenmiştir.
-
-# **SQL Sorgusu:**
-```sql
-SELECT
-    LEFT(billing_address, 3) || '...' || RIGHT(billing_address, 4) AS "Açık_adres"
-FROM Invoice
-WHERE
-    EXTRACT(YEAR FROM invoice_date) = 2013
-    AND EXTRACT(MONTH FROM invoice_date) = 8;
-```
-
-# **Çıktı:**
-| Açık_adres |
-|------------|
-| "3 C...reet" |
-| "Lij...20bg" |
-| "C/ ...o 85" |
-| "110...n Pl" |
-| "Av....2170" |
-| "Rua... 155" |
-| "162...reet" |
-
-Bu sorgu, adres bilgilerini gizliliği koruyacak şekilde kısaltırken, belirli bir tarih aralığına göre filtreleme yapmıştır.
+- **PostgreSQL**
+- **pgAdmin 4** (for executing queries and ERD visualization)
+- **SQL (DDL & DML)**
 
 ---
 
-# 3. Sonuç
+## Files in this Repository
 
-Bu ödev kapsamında:
-- NULL kayıtların sayısını tespit ettik.
-- `total` değerlerini iki katına çıkararak yeni bir sıralama yaptık.
-- Adres bilgilerini belirli bir formatta kısaltarak gösterdik.
+| File | Description |
+|------|-------------|
+| `online_education_platform.sql` | Complete SQL script to create all tables, constraints, and insert sample data |
+| `schema_diagram.png`           | Visual entity-relationship diagram (ERD) showing table structure and relations |
+| `README.md`                    | Project description and documentation (this file) |
+
+---
+
+## How to Run
+
+1. Open **pgAdmin** and connect to your PostgreSQL server.
+2. Create a new database (e.g., `education_platform`).
+3. Open the `online_education_platform.sql` file in Query Tool.
+4. Run the script to create the schema and populate it with sample data.
+5. View the tables and try custom queries!
+
+---
+
+## Notes
+
+- The schema is designed to be scalable and normalized.
+- Sample data is included for each table to assist with testing and demonstration.
+- The project follows good practices in database design: use of data types, constraint definitions, timestamp fields, and data integrity.
+
+---
+
+## Deliverable Summary
+
+- ✔️ All required tables are created
+- ✔️ Primary & foreign key relationships established
+- ✔️ Sample data provided
+- ✔️ ERD screenshot included
+- ✔️ GitHub repo created and made public
+
+---
+
+Thank you for reviewing this project!  
+Feel free to explore the schema and extend it for advanced features such as quizzes, messaging, or admin dashboards.
